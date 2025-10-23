@@ -12,6 +12,9 @@ create a .venv (python -m venv .venv)
 activate the virtual environment
 install the requirements.txt (pip install -r requirements.txt)
 
+## Application structure
+In the layout package there are modules for printing lines, titles, ... and a welcome to print at launch
+
 ## Database connection
 the application uses a '.env' file to store configuration settings.
 
