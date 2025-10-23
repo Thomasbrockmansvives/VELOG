@@ -8,7 +8,7 @@ velog.db
 velog.db-journal
 
 # Testing
-*_testing.py
+# *_testing.py
 
 # Distribution / packaging
 .Python

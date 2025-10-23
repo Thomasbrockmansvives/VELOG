@@ -18,6 +18,8 @@ the application uses a '.env' file to store configuration settings.
 1. Create a .env file in the root directory of the project
 2. Add the configuration as shown in example_env (modify if you placed the database elsewhere)
 
+The database can be tested with the db_testing.py script
+
 ## Database structure
 
 **Filename:** velog.db <br>
