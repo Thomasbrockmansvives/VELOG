@@ -2,8 +2,21 @@
 a command line bike ride logging application in python
 
 ## Features
+the user can log rides (with a score, weather type, time and which route he took)
+the user can also create new or modify existing routes (templates for rides)
+the user can ask for an export in csv of the ride loggings, the routes availables and a summary of his biking history
 
-## How to run
+## How to install
+after cloning from the remote repository
+create a .venv (python -m venv .venv)
+activate the virtual environment
+install the requirements.txt (pip install -r requirements.txt)
+
+## Database connection
+the application uses a '.env' file to store configuration settings.
+
+1. Create a .env file in the root directory of the project
+2. Add the configuration as shown in example_env (modify if you placed the database elsewhere)
 
 ## Database structure
 
