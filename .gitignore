@@ -7,6 +7,9 @@ __pycache__/
 velog.db
 velog.db-journal
 
+# Testing
+*_testing.py
+
 # Distribution / packaging
 .Python
 build/
