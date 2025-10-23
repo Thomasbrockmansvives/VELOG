@@ -18,7 +18,8 @@ the application uses a '.env' file to store configuration settings.
 1. Create a .env file in the root directory of the project
 2. Add the configuration as shown in example_env (modify if you placed the database elsewhere)
 
-The database can be tested with the db_testing.py script
+The database can be tested with the db_testing.py script.
+This script tests the connections, checks the existence of the required tables and counts the records in the database.
 
 ## Database structure
 

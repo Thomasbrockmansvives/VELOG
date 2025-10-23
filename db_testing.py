@@ -17,6 +17,8 @@ load_dotenv()
 # get database path from dotenv
 database_path = os.getenv('DATABASE_PATH', 'velog.db')
 
+
+# method to test connection
 def test_database_connection():
     try:
         connection = sqlite3.connect(database_path)
@@ -27,6 +29,7 @@ def test_database_connection():
         return None
     
 
+# method to check existence of tables (from list)
 def test_tables_exist(connection):
     cursor = connection.cursor()
     
@@ -49,7 +52,8 @@ def test_tables_exist(connection):
     return existing_tables
 
         
-        
+    
+# method to count records for each table
 def count_records(connection, table_name):
     cursor = connection.cursor()
     
@@ -61,7 +65,9 @@ def count_records(connection, table_name):
     except sqlite3.Error as e:
         print(f"   Error counting records in {table_name}: {e}")
         
+     
         
+# main method of the script
 def main():
     print("=" * 60)
     print("VELOG Database Test Script")
