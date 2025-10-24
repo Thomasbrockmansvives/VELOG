@@ -12,8 +12,43 @@ create a .venv (python -m venv .venv)
 activate the virtual environment
 install the requirements.txt (pip install -r requirements.txt)
 
-## Application structure
-In the layout package there are modules for printing lines, titles, ... and a welcome to print at launch
+## Application Design
+
+We are using some classes with each their own encapsulated logic. Each class handles its own database operations, so their is no separate database class for this:
+- UI Class: a class for user interactions: options menu, welcome message, handling user inputs and calling the separate class methods.
+- Ride Class: representing a single bike ride with the same attributes as in database and methods like save, read, update, delete
+- Route Class: representing a bike route with the same attributes as in database and methods like save, read, update
+- Report Class: generating CSV reports, with methods like export_all_rides, export_all_routes and export_summary
+
+### Class Structure
+
+#### UI Class
+includes main.py
+**Methods:** welcome_message(), display_menu(), run()
+
+#### Route Class
+**Attributes:** route_id, start, destination, version, type_id, length_km, average_score, average_time_minutes
+**Methods:** save(), update(), calculate_averages(), get_all(), get_by_id()
+##### Operations:
+**Create new route:** main.create_route() > new_route() > new_route.save() > database operation > print success message
+**Show all routes:** main.show_routes() > routes[] = Route.get_all() > database operation > print routes[]
+**Modify route:** main.modify_route() > route = Route.get_by_id() > database operation > collect new values by input > route.update() > database operation > print success message
+
+
+#### Ride Class
+**Attributes:** ride_id, route_id,date, start_time, end_time, score, weather_id
+**Methods:** save(), update(), delete(), get_all(), get_last_n(), get_by_id(), get_by_route(), update_route_averages(),calculate_duration()
+
+#### Report Class
+**Methods:** export_all_rides(), export_all_routes(), export_summary()
+
+
+
+
+
+
+
+
 
 ## Database connection
 the application uses a '.env' file to store configuration settings.
