@@ -4,7 +4,7 @@ a command line bike ride logging application in python
 ## FEATURES
 - the user can log rides (with a score, weather type, time and which route he took)
 - the user can also create new or modify existing routes (templates for rides)
-- the user can ask for an export in csv of the ride loggings, the routes availables and a summary of his biking history
+- the user can ask for an export in csv of the ride loggings and the routes availables
 
 ## INSTALLATION INSTRUCTIONS
 **after cloning from the remote repository:**
@@ -18,16 +18,15 @@ We are using some classes with each their own encapsulated logic. Each class han
 - UI Class: a class for user interactions: options menu, welcome message, handling user inputs and calling the separate class methods.
 - Ride Class: representing a single bike ride with the same attributes as in database and methods like save, read, update, delete
 - Route Class: representing a bike route with the same attributes as in database and methods like save, read, update
-- Report Class: generating CSV reports, with methods like export_all_rides, export_all_routes and export_summary
+- Report Class: generating CSV reports, with methods like export_all_rides and export_all_routes
 
 ### CLASS STRUCTURE
 
 #### UI CLASS
-&nbsp;&nbsp;&nbsp; includes main.py
+
 ##### Methods:
 - welcome_message()
 - display_menu()
-- run()
 
 #### ROUTE CLASS
 ##### Attributes:
@@ -39,7 +38,7 @@ We are using some classes with each their own encapsulated logic. Each class han
 - calculate_averages()
 - get_all()
 - get_by_id()
-- 
+
 ##### Operations:
 - **Create new route:**   main.create_route() > new_route() > new_route.save() > database operation > print success message <br>
 - **Show all routes:**   main.show_routes() > routes[] = Route.get_all() > database operation > print routes[] <br>
@@ -60,11 +59,20 @@ We are using some classes with each their own encapsulated logic. Each class han
 - update_route_averages()
 - calculate_duration()
 
+##### Operations:
+- **Log a ride:** main.create_ride() > new_ride() > new.ride_save() > database operation > new_ride.update_route_averages() > database operation > print success message
+- **Show last 10 rides:** main.show_last_rides() > rides[] = Ride.get_last_n(10) > database operation > print rides[]
+- **Modify a ride:** main.update_ride() > ride = Ride.get_ride_by_id() > database operation > collect new values by input > ride.update() > database operation > ride.update_route_averages() > print success message
+- **Delete a ride:** main.delete_ride() > ride = Ride.get_ride_by_id() > database operation > confirm deletion by input > route_id = ride.route_id > ride.delete() > database operation > route = Route.get_by_id(route_id) > database operation > route.calculate_averages() > database operation > print success message
+
 #### REPORT CLASS
 ##### Methods:
 - export_all_rides()
 - export_all_routes()
-- export_summary()
+
+##### Operations:
+- **Export routes:** main.export_routes() > routes[] = Route.get_all() > database operation > Report.export_all_routes(routes) > csv file operation > print success message
+- **Export rides:** main.export_rides() > rides[] = Ride.get_all() > database operation > Report.export_all_rides(rides) > csv file operation > print success message
 
 ## DATABASE 
 ### DB CONNECTION
