@@ -1,18 +1,18 @@
 # VELOG
 a command line bike ride logging application in python
 
-## <span style="color:blue">FEATURES</span>
+## 📃 FEATURES
 - the user can log rides (with a score, weather type, time and which route he took)
 - the user can also create new or modify existing routes (templates for rides)
 - the user can ask for an export in csv of the ride loggings and the routes availables
 
-## <span style="color:blue">INSTALLATION INSTRUCTIONS</span>
+## 🔧 INSTALLATION INSTRUCTIONS
 **after cloning from the remote repository:**
 - create a .venv (python -m venv .venv)
 - activate the virtual environment
 - install the requirements.txt (pip install -r requirements.txt)
 
-## <span style="color:blue">APPLICATION DESIGN</span>
+## ✏️ APPLICATION DESIGN
 
 We are using some classes with each their own encapsulated logic. Each class handles its own database operations, so their is no separate database class for this:
 - UI Class: a class for user interactions: options menu, welcome message, handling user inputs and calling the separate class methods.
@@ -74,7 +74,7 @@ We are using some classes with each their own encapsulated logic. Each class han
 - **Export routes:** main.export_routes() > routes[] = Route.get_all() > database operation > Report.export_all_routes(routes) > csv file operation > print success message
 - **Export rides:** main.export_rides() > rides[] = Ride.get_all() > database operation > Report.export_all_rides(rides) > csv file operation > print success message
 
-## <span style="color:blue">DATABASE</span>
+## 🗄️ DATABASE
 ### DB CONNECTION
 &nbsp;&nbsp;&nbsp;the application uses a '.env' file to store configuration settings.
 
