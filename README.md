@@ -33,36 +33,36 @@ We are using some classes with each their own encapsulated logic. Each class han
 ##### Attributes:
    route_id, start, destination, version, type_id, length_km, average_score, average_time_minutes
 ##### Methods:
-   save()
-   update()
-   calculate_averages()
-   get_all()
-   get_by_id()
+   save() <br>
+   update() <br>
+   calculate_averages() <br>
+   get_all() <br>
+   get_by_id() <br>
 ##### Operations:
-   **Create new route:**   main.create_route() > new_route() > new_route.save() > database operation > print success message
-   **Show all routes:**   main.show_routes() > routes[] = Route.get_all() > database operation > print routes[]
-   **Modify route:**   main.modify_route() > route = Route.get_by_id() > database operation > collect new values by input > route.update() > database operation > print success message
+   **Create new route:**   main.create_route() > new_route() > new_route.save() > database operation > print success message <br>
+   **Show all routes:**   main.show_routes() > routes[] = Route.get_all() > database operation > print routes[] <br>
+   **Modify route:**   main.modify_route() > route = Route.get_by_id() > database operation > collect new values by input > route.update() > database operation > print success message <br>
 
 
 #### RIDE CLASS
 ##### Attributes: 
    ride_id, route_id,date, start_time, end_time, score, weather_id
 ##### Methods:
-   save()
-   update()
-   delete()
-   get_all()
-   get_last_n()
-   get_by_id()
-   get_by_route()
-   update_route_averages()
-   calculate_duration()
+   save() <br>
+   update() <br>
+   delete() <br>
+   get_all() <br>
+   get_last_n() <br>
+   get_by_id() <br>
+   get_by_route() <br>
+   update_route_averages() <br>
+   calculate_duration() <br>
 
 #### REPORT CLASS
 ##### Methods:
-   export_all_rides()
-   export_all_routes()
-   export_summary()
+   export_all_rides() <br>
+   export_all_routes() <br>
+   export_summary() <br>
 
 
 ## DATABASE 
@@ -72,8 +72,8 @@ We are using some classes with each their own encapsulated logic. Each class han
    1. Create a .env file in the root directory of the project
    2. Add the configuration as shown in example_env (modify if you placed the database elsewhere)
 
-   The database can be tested with the db_testing.py script.
-   This script tests the connections, checks the existence of the required tables and counts the records in the database.
+   The database can be tested with the db_testing.py script. <br>
+   This script tests the connections, checks the existence of the required tables and counts the records in the database. <br>
 
 ### DB STRUCTURE
 
