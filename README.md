@@ -17,7 +17,7 @@ a command line bike ride logging application in python
 We are using some classes with each their own encapsulated logic. Each class handles its own database operations, so their is no separate database class for this:
 - UI Class: a class for user interactions: options menu, welcome message, handling user inputs and calling the separate class methods.
 - Ride Class: representing a single bike ride with the same attributes as in database and methods like save, read, update, delete
-- Route Class: representing a bike route with the same attributes as in database and methods like save, read, update
+- Route Class: representing a bike route with the same attributes as in database and methods like save, read
 - Report Class: generating CSV reports, with methods like export_all_rides and export_all_routes
 
 ### CLASS STRUCTURE
@@ -33,8 +33,7 @@ We are using some classes with each their own encapsulated logic. Each class han
 &nbsp;&nbsp;&nbsp; route_id, start, destination, version, type_id, length_km, average_score, average_time_minutes
 
 ##### Methods:
-- save()
-- update()
+- create()
 - calculate_averages()
 - get_all()
 - get_by_id()
@@ -42,7 +41,6 @@ We are using some classes with each their own encapsulated logic. Each class han
 ##### Operations:
 - **Create new route:**   main.create_route() > new_route() > new_route.save() > database operation > print success message <br>
 - **Show all routes:**   main.show_routes() > routes[] = Route.get_all() > database operation > print routes[] <br>
-- **Modify route:**   main.modify_route() > route = Route.get_by_id() > database operation > collect new values by input > route.update() > database operation > print success message <br>
 
 
 #### RIDE CLASS
