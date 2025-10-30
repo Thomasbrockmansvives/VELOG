@@ -10,6 +10,7 @@ Created on Thu Oct 30 14:47:47 2025
 import sqlite3
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 class Ride:
 
@@ -252,13 +253,59 @@ class Ride:
         except Exception as err:
             print(f"Error when reading from the database: {err}")
             
-            
     
-    # TODO
-    def calculate_averages(self):
-        pass
+    # class method to get all rides from a specific route
+    @classmethod
+    def get_rides_by_route_id(cls, route_id):
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
+        
+        
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+        
+                cursor = connection.cursor()
+            
+                query = """
+                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, routes.start as start, routes.destination as destination, routes.version as version, routes.length_km as length_km, types.type_name as type, weather_types.weather_name as weather
+                    FROM rides 
+                    JOIN routes ON rides.route_id = routes.route_id
+                    JOIN weather_types on rides.weather_id = weather_types.weather_id
+                    JOIN types on routes.type_id = types.type_id
+                    WHERE rides.route_id LIKE ?
+                    ORDER BY rides.date DESC, rides.start_time DESC
+                    """
+                
+                cursor.execute(query, (route_id,))
+                
+                list_rides = cursor.fetchall()
+            
+                return list_rides
+        
+        except Exception as err:
+            print(f"Error when reading from the database: {err}")
         
     
+    # classmethod to calculate the duration in minutes
+    @classmethod
+    def calculate_duration(cls, date, start_time, end_time):
+        
+        date_str = date
+        start_time_str = start_time
+        end_time_str = end_time
+        
+        start_datetime = datetime.strptime(f"{date_str} {start_time_str}", "%Y-%m-%d %H:%M")
+        end_datetime = datetime.strptime(f"{date_str} {end_time_str}", "%Y-%m-%d %H:%M")
+        
+        duration = end_datetime - start_datetime
+        
+        duration_minutes = int(duration.total_seconds() / 60)
+        
+        return duration_minutes
 
 
 
@@ -266,4 +313,5 @@ class Ride:
 if __name__ == '__main__':
     
 
-        
+        list_rides = Ride.get_all()
+        print(list_rides)

@@ -54,7 +54,6 @@ We are using some classes with each their own encapsulated logic. Each class han
 - get_last_n()
 - get_by_id()
 - get_by_route()
-- update_route_averages()
 - calculate_duration()
 
 ##### Operations:
