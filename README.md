@@ -72,6 +72,16 @@ We are using some classes with each their own encapsulated logic. Each class han
 - **Export routes:** main.export_routes() > routes[] = Route.get_all() > database operation > Report.export_all_routes(routes) > csv file operation > print success message
 - **Export rides:** main.export_rides() > rides[] = Ride.get_all() > database operation > Report.export_all_rides(rides) > csv file operation > print success message
 
+
+#### UI CLASS
+##### Methods:
+- print_menu()
+- print_routes()
+- print_welcome()
+- print_weather_types()
+- print_route_types()
+
+
 ## 🗄️ DATABASE
 ### DB CONNECTION
 &nbsp;&nbsp;&nbsp;the application uses a '.env' file to store configuration settings.

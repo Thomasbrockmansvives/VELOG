@@ -14,24 +14,30 @@ import os
 class Ride:
 
     # TODO
-    def __init__ (self):
+    def __init__ (self, route_id, date, start_time, end_time, score, weather_id):
         try:
-            # type_id can only between 5 and 8
-            if type_id < 5 or type_id > 8:
-                print("That type of route is not supported.")
+            # weather_id can only between 6 and 13
+            if weather_id < 6 or weather_id > 13:
+                print("That type of weather is not supported.")
+                
+            elif score < 0 or score > 10:
+                print("The score must be between 0 and 10.")
                 
             else:
-                self.start = start.lower()
-                self.destination = destination.lower()
-                self.type_id = type_id
-                self.length_km = int(length_km)
-                print(f"A new route with start {start} and destination {destination} and {length_km} km longs has successfully been created.")
+                self.route_id = route_id
+                self.date = date
+                self.start_time = start_time
+                self.end_time = end_time
+                self.score = score
+                self.weather_id = weather_id
+                
+                print(f"A new ride has been created on {date} from {start_time} to {end_time} with a score of {score}.")
                 
         except ValueError as err:
-            print(f"Error when creating a new route. Invalid use of value: {err}")
+            print(f"Error when logging a ride. Invalid use of value: {err}")
             
         except Exception as err:
-            print(f"Error when creating a new route: {err}")
+            print(f"Error when logging a ride: {err}")
      
     
     # TODO        
