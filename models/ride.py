@@ -116,7 +116,35 @@ class Ride:
         except Exception as err:
             print(f"Error when writing to the database: {err}")
     
-    
+    # class method to delete a ride
+    @classmethod    
+    def delete_by_id(cls, ride_id):
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
+        
+        
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+        
+                cursor = connection.cursor()
+            
+                query = """
+                    DELETE FROM rides WHERE ride_id LIKE ?
+                    """
+                
+                cursor.execute(query, (ride_id,))
+                
+                connection.commit()
+                
+            
+        
+        except Exception as err:
+            print(f"Error when deleting from the database: {err}")
+            
         
     # class method to get a ride by id   
     @classmethod
@@ -149,7 +177,7 @@ class Ride:
             print(f"Error when reading from the database: {err}")
         
         
-    # TODO    
+    
     # class method to get all rides   
     @classmethod
     def get_all(cls): 
@@ -168,14 +196,58 @@ class Ride:
                 cursor = connection.cursor()
             
                 query = """
-                    SELECT * FROM routes
+                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, routes.start as start, routes.destination as destination, routes.version as version, routes.length_km as length_km, types.type_name as type, weather_types.weather_name as weather
+                    FROM rides 
+                    JOIN routes ON rides.route_id = routes.route_id
+                    JOIN weather_types on rides.weather_id = weather_types.weather_id
+                    JOIN types on routes.type_id = types.type_id
+                    ORDER BY rides.date DESC, rides.start_time DESC
                     """
                 
                 cursor.execute(query)
                 
-                list_routes = cursor.fetchall()
+                list_rides = cursor.fetchall()
             
-                return list_routes
+                return list_rides
+        
+        except Exception as err:
+            print(f"Error when reading from the database: {err}")
+            
+            
+    
+      
+    # class method to get last n rides   
+    @classmethod
+    def get_last_n(cls, n): 
+        
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
+        
+        
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+        
+                cursor = connection.cursor()
+            
+                query = """
+                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, routes.start as start, routes.destination as destination, routes.version as version, routes.length_km as length_km, types.type_name as type, weather_types.weather_name as weather
+                    FROM rides 
+                    JOIN routes ON rides.route_id = routes.route_id
+                    JOIN weather_types on rides.weather_id = weather_types.weather_id
+                    JOIN types on routes.type_id = types.type_id
+                    ORDER BY rides.date DESC, rides.start_time DESC
+                    LIMIT ?
+                    """
+                
+                cursor.execute(query, (n,))
+                
+                list_n_rides = cursor.fetchall()
+            
+                return list_n_rides
         
         except Exception as err:
             print(f"Error when reading from the database: {err}")
@@ -193,9 +265,5 @@ class Ride:
         
 if __name__ == '__main__':
     
-    ride = Ride.get_by_id(3)
-    print(ride)
-    ride_update = Ride(ride[1], ride[2], ride[3], ride[4], ride[5], ride[6])
-    
-    ride_update.update(ride[0],ride[1], ride[2],ride[3],"10:10",7,ride[6])
+
         

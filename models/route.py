@@ -119,6 +119,7 @@ class Route:
             print(f"Error when reading from the database: {err}")
         
         
+    # TODO join weather and type
     # class method to get all routes   
     @classmethod
     def get_all(cls): 
