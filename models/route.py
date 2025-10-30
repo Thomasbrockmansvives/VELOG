@@ -24,7 +24,7 @@ class Route:
                 self.destination = destination.lower()
                 self.type_id = type_id
                 self.length_km = int(length_km)
-                print(f"A new route with start {start} and destination {destination} and {length_km} km longs has successfully been created.")
+                
                 
         except ValueError as err:
             print(f"Error when creating a new route. Invalid use of value: {err}")
@@ -57,8 +57,6 @@ class Route:
         while Route.route_exists(self.start, self.destination, version_index):
             version_index += 1
         
-        print(f"This version will be {version_index}")
-        
         current_file = os.path.abspath(__file__)
         models_dir = os.path.dirname(current_file)
         project_root = os.path.dirname(models_dir)
@@ -85,8 +83,6 @@ class Route:
                     )
                 cursor.execute(query, params)
                 connection.commit()
-            
-            print("The new route has been saved to the database.")
         
         except Exception as err:
             print(f"Error when writing to the database: {err}")

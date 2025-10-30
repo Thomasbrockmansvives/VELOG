@@ -13,7 +13,7 @@ import os
 
 class Ride:
 
-    # TODO
+    
     def __init__ (self, route_id, date, start_time, end_time, score, weather_id):
         try:
             # weather_id can only between 6 and 13
@@ -31,7 +31,6 @@ class Ride:
                 self.score = score
                 self.weather_id = weather_id
                 
-                print(f"A new ride has been created on {date} from {start_time} to {end_time} with a score of {score}.")
                 
         except ValueError as err:
             print(f"Error when logging a ride. Invalid use of value: {err}")
@@ -39,18 +38,9 @@ class Ride:
         except Exception as err:
             print(f"Error when logging a ride: {err}")
      
-    
-    # TODO        
+           
      # method to write object to the database       
     def create(self):
-        
-        # checking if a route with this start and destination already exists, in which case a next version is created
-        version_index = 1
-        
-        while Route.route_exists(self.start, self.destination, version_index):
-            version_index += 1
-        
-        print(f"This version will be {version_index}")
         
         current_file = os.path.abspath(__file__)
         models_dir = os.path.dirname(current_file)
@@ -66,30 +56,71 @@ class Ride:
                 cursor = connection.cursor()
             
                 query = """
-                    INSERT INTO routes (start, destination, version, type_id, length_km)
-                    VALUES (?, ?, ?, ?, ?)
+                    INSERT INTO rides (route_id, date, start_time, end_time, score, weather_id)
+                    VALUES (?, ?, ?, ?, ?, ?)
                     """
                 params = (
-                    self.start,
-                    self.destination,
-                    version_index,
-                    self.type_id,
-                    self.length_km
+                    self.route_id,
+                    self.date,
+                    self.start_time,
+                    self.end_time,
+                    self.score,
+                    self.weather_id
                     )
                 cursor.execute(query, params)
                 connection.commit()
             
-            print("The new route has been saved to the database.")
         
         except Exception as err:
             print(f"Error when writing to the database: {err}")
         
     
     
-    # TODO        
+    def update(self, ride_id, route_id,date,start_time, end_time, score, weather_id):
+            
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
+        
+        # writing to the database
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+        
+                cursor = connection.cursor()
+            
+                query = """
+                    UPDATE rides 
+                    SET route_id = ?,
+                        date = ?,
+                        start_time = ?,
+                        end_time = ?,
+                        score = ?,
+                        weather_id = ?
+                    WHERE ride_id LIKE ?
+                    """
+                params = (
+                    route_id,
+                    date,
+                    start_time,
+                    end_time,
+                    score,
+                    weather_id,
+                    ride_id
+                    )
+                cursor.execute(query, params)
+                connection.commit()
+        
+        except Exception as err:
+            print(f"Error when writing to the database: {err}")
+    
+    
+        
     # class method to get a ride by id   
     @classmethod
-    def get_by_id(cls, route_id): 
+    def get_by_id(cls, ride_id): 
         
         current_file = os.path.abspath(__file__)
         models_dir = os.path.dirname(current_file)
@@ -105,14 +136,14 @@ class Ride:
                 cursor = connection.cursor()
             
                 query = """
-                    SELECT * FROM routes WHERE route_id LIKE ?
+                    SELECT * FROM rides WHERE ride_id LIKE ?
                     """
                 
-                cursor.execute(query, (route_id,))
+                cursor.execute(query, (ride_id,))
                 
-                route = cursor.fetchone()
+                ride = cursor.fetchone()
             
-                return route
+                return ride
         
         except Exception as err:
             print(f"Error when reading from the database: {err}")
@@ -162,5 +193,9 @@ class Ride:
         
 if __name__ == '__main__':
     
-    pass
+    ride = Ride.get_by_id(3)
+    print(ride)
+    ride_update = Ride(ride[1], ride[2], ride[3], ride[4], ride[5], ride[6])
+    
+    ride_update.update(ride[0],ride[1], ride[2],ride[3],"10:10",7,ride[6])
         
