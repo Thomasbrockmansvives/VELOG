@@ -189,7 +189,26 @@ class Route:
         
         
     # TODO
-    def calculate_averages(self):
+    # classmethod to update all averages of a route
+    @classmethod
+    def calculate_averages(cls, route_id):
+        
+        # initialise total_duration
+        # initialise total_score
+        
+        # get all rides from this route (using method from Ride class)
+        # initialize count of rides as integer
+        
+        # loop through rides and calculate duration (from Ride class) and add to total_duration
+        # and also add each score to total_score
+        
+        # calculate average_duration
+        
+        # calculate average_score
+        
+        # update database for this route
+        
+
         pass
         
     

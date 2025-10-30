@@ -22,12 +22,6 @@ We are using some classes with each their own encapsulated logic. Each class han
 
 ### CLASS STRUCTURE
 
-#### UI CLASS
-
-##### Methods:
-- welcome_message()
-- display_menu()
-
 #### ROUTE CLASS
 ##### Attributes:
 &nbsp;&nbsp;&nbsp; route_id, start, destination, version, type_id, length_km, average_score, average_time_minutes
