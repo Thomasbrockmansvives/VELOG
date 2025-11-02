@@ -204,7 +204,7 @@ class Ride:
                 cursor = connection.cursor()
             
                 query = """
-                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, weather_types.weather_name as weather, routes.start as start, routes.destination as destination, routes.route_id as route, types.type_name as type, routes.length_km as length_km, routes.version as version, routes.average_score as average_route_score
+                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, routes.start as start, routes.destination as destination, routes.route_id as route, types.type_name as type, routes.length_km as length_km, routes.version as version, routes.average_score as average_route_score, weather_types.weather_name as weather, rides.ride_id as ride_id
                     FROM rides 
                     JOIN routes ON rides.route_id = routes.route_id
                     JOIN weather_types on rides.weather_id = weather_types.weather_id
@@ -324,6 +324,6 @@ if __name__ == '__main__':
         list_rides = Ride.get_all()
         print(list_rides)
         
-        print(Ride.get_by_id(11))
+        print(Ride.get_by_id(1))
         
         print(Ride.get_rides_by_route_id(1))

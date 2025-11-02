@@ -34,20 +34,6 @@ class Route:
             print(f"Error when creating a new route: {err}")
      
     
-    def set_length_km(self, new_length_km):
-        self.length_km = new_length_km
-        
-    def set_start(self, new_start):
-        self.start = new_start
-        
-    def set_destination(self, new_destination):
-        self.destination = new_destination
-        
-    def set_type(self, new_type_id):
-        if new_type_id < 5 or new_type_id > 8:
-            print("This type does not exist")
-        else:
-            self.type_id = new_type_id
             
      # method to write object to the database       
     def create(self):
