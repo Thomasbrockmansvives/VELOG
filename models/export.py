@@ -27,26 +27,32 @@ class Export:
         list_routes = Route.get_all()
         
         # creating path to new export file
-        now = datetime.now()
-        now_string = now.strftime("%Y%m%d%H%M%S")
-        file_name = "export_routes_" + now_string + ".csv"
-    
-        current_file = os.path.abspath(__file__)
-        models_dir = os.path.dirname(current_file)
-        project_root = os.path.dirname(models_dir)
-        export_folder = os.path.join(project_root, 'Export')
+        try:
+            now = datetime.now()
+            now_string = now.strftime("%Y%m%d%H%M%S")
+            file_name = "export_routes_" + now_string + ".csv"
         
-        csv_file_path = os.path.join(export_folder, file_name)
+            current_file = os.path.abspath(__file__)
+            models_dir = os.path.dirname(current_file)
+            project_root = os.path.dirname(models_dir)
+            export_folder = os.path.join(project_root, 'Export')
+            
+            csv_file_path = os.path.join(export_folder, file_name)
+        except Exception as err:
+            print(f"Error when checking path to export folder: {err}")
         
         # populating export file
-        with open(csv_file_path, 'w',newline='') as file:
-            writer = csv.writer(file, delimiter=';')
+        try:
+            with open(csv_file_path, 'w',newline='') as file:
+                writer = csv.writer(file, delimiter=';')
+                
+                header = ['id', 'start', 'destination', 'type', 'length_km', 'average_score', 'average_time_minutes']
+                writer.writerow(header)
             
-            header = ['id', 'start', 'destination', 'type', 'length_km', 'average_score', 'average_time_minutes']
-            writer.writerow(header)
-        
-            for route in list_routes:
-                writer.writerow(route)
+                for route in list_routes:
+                    writer.writerow(route)
+        except Exception as err:
+            print(f"Error when exporting to csv: {err}")
                 
     # classmethod to export all rides to csv
     @classmethod
@@ -55,26 +61,32 @@ class Export:
         list_rides = Ride.get_all()
         
         # creating path to new export file
-        now = datetime.now()
-        now_string = now.strftime("%Y%m%d%H%M%S")
-        file_name = "export_rides_" + now_string + ".csv"
-    
-        current_file = os.path.abspath(__file__)
-        models_dir = os.path.dirname(current_file)
-        project_root = os.path.dirname(models_dir)
-        export_folder = os.path.join(project_root, 'Export')
+        try:
+            now = datetime.now()
+            now_string = now.strftime("%Y%m%d%H%M%S")
+            file_name = "export_rides_" + now_string + ".csv"
         
-        csv_file_path = os.path.join(export_folder, file_name)
+            current_file = os.path.abspath(__file__)
+            models_dir = os.path.dirname(current_file)
+            project_root = os.path.dirname(models_dir)
+            export_folder = os.path.join(project_root, 'Export')
+            
+            csv_file_path = os.path.join(export_folder, file_name)
+        except Exception as err:
+            print(f"Error when checking path to export folder: {err}")
         
         # populating export file
-        with open(csv_file_path, 'w',newline='') as file:
-            writer = csv.writer(file, delimiter=';')
+        try:
+            with open(csv_file_path, 'w',newline='') as file:
+                writer = csv.writer(file, delimiter=';')
+                
+                header = ['date', 'start_time', 'end_time', 'score', 'weather','start', 'destination', 'route', 'type', 'length_km', 'version', 'average_route_score']
+                writer.writerow(header)
             
-            header = ['date', 'start_time', 'end_time', 'score', 'weather','start', 'destination', 'route', 'type', 'length_km', 'version', 'average_route_score']
-            writer.writerow(header)
-        
-            for ride in list_rides:
-                writer.writerow(ride)
+                for ride in list_rides:
+                    writer.writerow(ride)
+        except Exception as err:
+            print(f"Error when exporting to csv: {err}")
             
 if __name__ == '__main__':
     Export.export_all_rides()

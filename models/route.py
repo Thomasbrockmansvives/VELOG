@@ -117,7 +117,7 @@ class Route:
                 return route
         
         except Exception as err:
-            print(f"Error when reading from the database: {err}")
+            print("That route does not exist. Please use an existing route id.")
         
         
     

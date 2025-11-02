@@ -20,3 +20,4 @@ if __name__ == "__main__":
 
 
 # use dictionary of options to go through
+# use success message to guide user

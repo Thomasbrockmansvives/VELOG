@@ -120,7 +120,7 @@ class Ride:
                 connection.commit()
         
         except Exception as err:
-            print(f"Error when writing to the database: {err}")
+            print("That ride does not exist. Please use an existing ride id.")
     
     # class method to delete a ride
     @classmethod    
@@ -149,7 +149,7 @@ class Ride:
             
         
         except Exception as err:
-            print(f"Error when deleting from the database: {err}")
+            print("That ride does not exist. Please use an existing ride id.")
             
         
     # class method to get a ride by id   
@@ -182,7 +182,7 @@ class Ride:
                 return ride_object
         
         except Exception as err:
-            print(f"Error when reading from the database: {err}")
+            print("That ride does not exist. Please use an existing ride id.")
         
         
     
@@ -295,7 +295,7 @@ class Ride:
                 return list_rides
         
         except Exception as err:
-            print(f"Error when reading from the database: {err}")
+            print("That route doesn't exist. Please use an existing route id.")
         
     
     # classmethod to calculate the duration in minutes
@@ -324,6 +324,6 @@ if __name__ == '__main__':
         list_rides = Ride.get_all()
         print(list_rides)
         
-        print(Ride.get_by_id(1))
+        print(Ride.get_by_id(11))
         
         print(Ride.get_rides_by_route_id(1))
