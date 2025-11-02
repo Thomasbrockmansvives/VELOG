@@ -10,8 +10,9 @@ velog.db-journal
 # Testing
 # *_testing.py
 
-# Export files
+# Export files to be ignored, but not folder
 Export/*
+!Export/.gitkeep
 
 # Distribution / packaging
 .Python
