@@ -142,6 +142,7 @@ class Route:
                     SELECT routes.route_id as id, routes.start as start, routes.destination as destination, types.type_name as type, routes.length_km as length_km, routes.average_score as average_score, routes.average_time_minutes as average_time_minutes
                     FROM routes
                     JOIN types ON routes.type_id = types.type_id
+                    ORDER BY average_score DESC
                     """
                 
                 cursor.execute(query)
