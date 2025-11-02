@@ -12,6 +12,7 @@ from ride import Ride
 from route import Route
 import csv
 from datetime import datetime
+import os
 
 class Export:
     
@@ -30,7 +31,13 @@ class Export:
         file_name = "export_routes_" + now_string + ".csv"
         print(file_name)
         
-        with open(file_name, 'w',newline='') as file:
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        export_folder = os.path.join(project_root, 'Export')
+        csv_file_path = os.path.join(export_folder, file_name)
+        
+        with open(csv_file_path, 'w',newline='') as file:
             writer = csv.writer(file, delimiter=';')
         
             for route in list_routes:
