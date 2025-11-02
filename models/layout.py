@@ -14,7 +14,7 @@ class Layout:
         pass
     
     @classmethod
-    def splash_screen(self):
+    def splash_screen(cls):
         
         velog_logo = [
             "█████████████████████████████████████████████████████",
@@ -27,12 +27,31 @@ class Layout:
             "█████████████████████████████████████████████████████",
             "████" + "{:^45}".format("the  bike  rides  logging  application".upper()) + "████",
             "█████████████████████████████████████████████████████",
-            "█████████████████████████████████████████████████████"
+            "█████████████████████████████████████████████████████",
+            ""
             ]
         
         for line in velog_logo:
             print(line)
             
+    @classmethod
+    def print_title(cls, title):
+
+        title = [
+            "",
+            "█████████████████████████████████████████████████████",
+            "{:^53}".format("<<< " +title.upper() + " >>>"),
+            "="*53
+            ]
+        
+        for line in title:
+            print(line)
+            
+
+    
+    
+    
 
 if __name__ == '__main__':
     Layout.splash_screen()
+    Layout.print_title("choose an option")
