@@ -10,6 +10,9 @@ velog.db-journal
 # Testing
 # *_testing.py
 
+# Export files
+Export/*
+
 # Distribution / packaging
 .Python
 build/
