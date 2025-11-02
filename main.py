@@ -12,11 +12,7 @@ from layout.welcome import display_welcome
 
 def main():
 
-    # Display welcome screen
-    display_welcome()
-    
-    
-    # TODO: Add main menu and application logic here
+    pass
 
 
 if __name__ == "__main__":
