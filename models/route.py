@@ -10,6 +10,7 @@ Created on Thu Oct 23 14:47:47 2025
 import sqlite3
 from dotenv import load_dotenv
 import os
+from ride import Ride
 
 class Route:
 
@@ -119,7 +120,7 @@ class Route:
             print(f"Error when reading from the database: {err}")
         
         
-    # TODO join weather and type
+    
     # class method to get all routes   
     @classmethod
     def get_all(cls): 
@@ -138,7 +139,9 @@ class Route:
                 cursor = connection.cursor()
             
                 query = """
-                    SELECT * FROM routes
+                    SELECT routes.route_id as id, routes.start as start, routes.destination as destination, types.type_name as type, routes.length_km as length_km, routes.average_score as average_score, routes.average_time_minutes as average_time_minutes
+                    FROM routes
+                    JOIN types ON routes.type_id = types.type_id
                     """
                 
                 cursor.execute(query)
@@ -188,30 +191,68 @@ class Route:
             print(f"Error when reading from the database: {err}")
         
         
-    # TODO
+    
     # classmethod to update all averages of a route
     @classmethod
     def calculate_averages(cls, route_id):
         
-        # initialise total_duration
-        # initialise total_score
+        total_duration = 0
+        total_score = 0
         
-        # get all rides from this route (using method from Ride class)
-        # initialize count of rides as integer
+        list_rides = Ride.get_rides_by_route_id(route_id)
         
-        # loop through rides and calculate duration (from Ride class) and add to total_duration
-        # and also add each score to total_score
+        count_rides = len(list_rides)
         
-        # calculate average_duration
+        # Only calculate and update if there are rides for this route
+        if count_rides == 0:
+            print(f"No rides found for route_id {route_id}")
+            return
         
-        # calculate average_score
+        for ride in list_rides:
+                        
+            date = ride[0]
+            start_time = ride[1]
+            end_time = ride[2]
+            score = ride[3]
+            
+            ride_duration = Ride.calculate_duration(date, start_time, end_time)
+            total_duration += ride_duration
+            total_score += score
         
-        # update database for this route
+        average_duration = total_duration / count_rides
+        average_score = total_score / count_rides
         
 
-        pass
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
         
-    
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+                cursor = connection.cursor()
+                
+                query = """
+                    UPDATE routes 
+                    SET average_score = ?, average_time_minutes = ?
+                    WHERE route_id = ?
+                    """
+                
+                params = (
+                    round(average_score, 2),
+                    int(round(average_duration)),
+                    route_id
+                )
+                
+                cursor.execute(query, params)
+                connection.commit()
+                
+                print(f"Updated route {route_id}: average_score={round(average_score, 2)}, average_time_minutes={int(round(average_duration))}")
+        
+        except Exception as err:
+            print(f"Error when updating route averages in the database: {err}")
 
 
 
@@ -224,5 +265,7 @@ if __name__ == '__main__':
     print(list)
     
     print("")
+    
+    Route.calculate_averages(4)
 
         

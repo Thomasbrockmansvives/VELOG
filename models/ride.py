@@ -38,6 +38,11 @@ class Ride:
             
         except Exception as err:
             print(f"Error when logging a ride: {err}")
+            
+            
+    def __str__(self):
+        
+        return (f"{self.route_id} - {self.date} {self.start_time} - {self.end_time} | {self.score} | {self.weather_id}")
      
            
      # method to write object to the database       
@@ -76,7 +81,7 @@ class Ride:
             print(f"Error when writing to the database: {err}")
         
     
-    
+    # method to update a record
     def update(self, ride_id, route_id,date,start_time, end_time, score, weather_id):
             
         current_file = os.path.abspath(__file__)
@@ -171,8 +176,10 @@ class Ride:
                 cursor.execute(query, (ride_id,))
                 
                 ride = cursor.fetchone()
+                
+                ride_object = Ride(ride[1],ride[2],ride[3],ride[4],ride[5],ride[6])
             
-                return ride
+                return ride_object
         
         except Exception as err:
             print(f"Error when reading from the database: {err}")
@@ -283,7 +290,8 @@ class Ride:
                 cursor.execute(query, (route_id,))
                 
                 list_rides = cursor.fetchall()
-            
+                
+                    
                 return list_rides
         
         except Exception as err:
@@ -315,3 +323,7 @@ if __name__ == '__main__':
 
         list_rides = Ride.get_all()
         print(list_rides)
+        
+        print(Ride.get_by_id(1))
+        
+        print(Ride.get_rides_by_route_id(1))

@@ -11,7 +11,7 @@ a command line bike ride logging application in python
 - create a .venv (python -m venv .venv)
 - activate the virtual environment
 - install the requirements.txt (pip install -r requirements.txt)
-
+- create a .env file (look at example_env) with the correct path to the database
 ## ✏️ APPLICATION DESIGN
 
 We are using some classes with each their own encapsulated logic. Each class handles its own database operations, so their is no separate database class for this:
