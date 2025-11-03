@@ -8,8 +8,8 @@ Created on Sun Nov  2 13:12:17 2025
 @author: thomasbrockmans
 """
 
-from ride import Ride
-from route import Route
+from models.ride import Ride
+from models.route import Route
 import csv
 from datetime import datetime
 import os

@@ -8,8 +8,8 @@ Created on Sun Nov  2 13:54:40 2025
 @author: thomasbrockmans
 """
 
-from ride import Ride
-from route import Route
+from models.ride import Ride
+from models.route import Route
 
 class Layout:
     
@@ -88,7 +88,7 @@ class Layout:
 
         title = [
             "",
-            "███████████████████████████████████████████████████████████████████████████████████",
+            "█"*83,
             "",
             "{:^83}".format("<<< " +title.upper() + " >>>"),
             "_"*83,
@@ -98,8 +98,36 @@ class Layout:
         for line in title:
             print(line)
             
+            
+    @classmethod
+    def print_text(cls, text):
+        text = "{:^83}".format(text.title())
+        
+        print(text)
+        
+        
+    @classmethod
+    def print_line(cls):  
+        print()
+        print("█"*83,)
+        print()
+    
+    
+        
+    @classmethod
+    def print_continue(cls):
+        
+        print()
+        input("{:^83}".format("enter any key to continue..."))
+
+            
     @classmethod
     def print_main_options(cls):
+        
+        print("{:^83}".format("<<< MAIN OPTIONS >>>"))
+        print("="*83)
+        print("")
+        
         list_main_options = [
             [1, "LOG a new ride"],
             [2, "Show all RIDES"],
@@ -149,6 +177,11 @@ class Layout:
         
     @classmethod
     def print_ride_options(cls):
+        
+        print("{:^83}".format("<<< RIDE OPTIONS >>>"))
+        print("="*83)
+        print("")
+        
         list_ride_options = [
             [1, "LOG a new ride"],
             [2, "UPDATE a ride"],
@@ -223,6 +256,11 @@ class Layout:
         
     @classmethod
     def print_route_options(cls):
+        
+        print("{:^83}".format("<<< ROUTE OPTIONS >>>"))
+        print("="*83)
+        print("")
+        
         list_route_options = [
             [1, "CREATE a new ROUTE"],
             [2, "Show all RIDES of a specific ROUTE"],

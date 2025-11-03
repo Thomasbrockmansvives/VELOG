@@ -10,7 +10,7 @@ Created on Thu Oct 23 14:47:47 2025
 import sqlite3
 from dotenv import load_dotenv
 import os
-from ride import Ride
+from models.ride import Ride
 
 class Route:
 
