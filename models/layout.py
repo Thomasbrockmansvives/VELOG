@@ -191,7 +191,33 @@ class Layout:
         print("") 
         
         
-    #TODO: show rides of a route
+    
+    @classmethod
+    def print_all_rides_by_route(cls,route_id):
+        print("{:^83}".format(f"<<< ALL RIDES OF ROUTE {route_id} >>>"))
+        print("="*83)
+        print("")
+        
+        rides = Ride.get_rides_by_route_id(route_id)
+        
+        print("{:<4}".format("ID") + "|" + "{:<11}".format("DATE") + "|" + "{:<6}".format("START") + "|" + "{:<6}".format("END") + "|" + "{:<6}".format("SCORE") + "|" + "{:<9}".format("FROM") + "|" + "{:<9}".format("TO") + "|" + "{:<4}".format("KM") + "|" + "{:<9}".format("TYPE") + "|" + "{:<10}".format("WEATHER") + "|")
+        print("-"*83)
+        
+        for ride in rides:
+            ride_id = ride[10]
+            date = ride[0]
+            start = ride[1]
+            end = ride[2]
+            score = ride[3]
+            from_location = ride[4]
+            to_location = ride[5]
+            length = ride[7]
+            type_route = ride[8]
+            weather = ride[9]
+            print("{:<4}".format(f"{ride_id}") + "|" + "{:<11}".format(f"{date}") + "|" + "{:<6}".format(f"{start}") + "|"  + "{:<6}".format(f"{end}") + "|"   + "{:<6}".format(f"{score}") + "|"   + "{:<9}".format(f"{from_location}") + "|"   + "{:<9}".format(f"{to_location}") + "|"  + "{:<4}".format(f"{length}") + "|" + "{:<9}".format(f"{type_route}") + "|"+ "{:<10}".format(f"{weather}") + "|")
+           
+            
+        print("")   
         
         
         

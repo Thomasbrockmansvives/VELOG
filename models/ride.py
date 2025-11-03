@@ -278,7 +278,7 @@ class Ride:
                 cursor = connection.cursor()
             
                 query = """
-                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, routes.start as start, routes.destination as destination, routes.version as version, routes.length_km as length_km, types.type_name as type, weather_types.weather_name as weather
+                    SELECT  rides.date as date, rides.start_time as start_time, rides.end_time as end_time, rides.score as score, routes.start as start, routes.destination as destination, routes.version as version, routes.length_km as length_km, types.type_name as type, weather_types.weather_name as weather, rides.ride_id as ride_id
                     FROM rides 
                     JOIN routes ON rides.route_id = routes.route_id
                     JOIN weather_types on rides.weather_id = weather_types.weather_id
