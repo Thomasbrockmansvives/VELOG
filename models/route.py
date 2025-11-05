@@ -70,6 +70,10 @@ class Route:
                     )
                 cursor.execute(query, params)
                 connection.commit()
+                
+            print()
+            print("The route has been created")
+            print()
         
         except Exception as err:
             print(f"Error when writing to the database: {err}")

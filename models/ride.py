@@ -75,6 +75,9 @@ class Ride:
                     )
                 cursor.execute(query, params)
                 connection.commit()
+                
+                print()
+                print("The ride has been logged.")
             
         
         except Exception as err:
@@ -118,8 +121,12 @@ class Ride:
                     )
                 cursor.execute(query, params)
                 connection.commit()
+                
+                
+            print()
+            print("Ride has been updated.")
         
-        except Exception as err:
+        except Exception:
             print("That ride does not exist. Please use an existing ride id.")
     
     # class method to delete a ride
@@ -145,6 +152,9 @@ class Ride:
                 cursor.execute(query, (ride_id,))
                 
                 connection.commit()
+                
+                print()
+                print("The ride has been deleted.")
                 
             
         

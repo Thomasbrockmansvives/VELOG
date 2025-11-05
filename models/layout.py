@@ -10,6 +10,9 @@ Created on Sun Nov  2 13:54:40 2025
 
 from models.ride import Ride
 from models.route import Route
+import os
+import sqlite3
+from dotenv import load_dotenv
 
 class Layout:
     
@@ -186,7 +189,8 @@ class Layout:
             [1, "LOG a new ride"],
             [2, "UPDATE a ride"],
             [3, "DELETE a ride"],
-            [4, "BACK to the main menu"]
+            [4, "EXPORT all rides"],
+            [5, "BACK to the main menu"]
             ]
         
         for option in list_ride_options:
@@ -253,6 +257,75 @@ class Layout:
         print("")   
         
         
+    @classmethod    
+    def print_weather(cls):
+        
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
+        
+        # writing to the database
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+        
+                cursor = connection.cursor()
+            
+                query = """
+                    SELECT * FROM weather_types
+                    """
+                
+                cursor.execute(query)
+                
+                weather_list = cursor.fetchall()
+                
+                for weather in weather_list:
+                    id = weather[0]
+                    name = weather[1]
+                    print(f"{id} - {name}")
+            
+        
+        except Exception as err:
+            print(f"Error when reading from the database: {err}")
+            
+            
+    @classmethod    
+    def print_route_types(cls):
+        
+        current_file = os.path.abspath(__file__)
+        models_dir = os.path.dirname(current_file)
+        project_root = os.path.dirname(models_dir)
+        load_dotenv()
+        db_path = os.getenv("DATABASE_PATH")
+        db_root_path = os.path.join(project_root, db_path)
+        
+        # writing to the database
+        try:
+            with sqlite3.connect(db_root_path) as connection:
+        
+                cursor = connection.cursor()
+            
+                query = """
+                    SELECT * FROM types
+                    """
+                
+                cursor.execute(query)
+                
+                route_type_list = cursor.fetchall()
+                
+                for route_type in route_type_list:
+                    id = route_type[0]
+                    name = route_type[1]
+                    print(f"{id} - {name}")
+            
+        
+        except Exception as err:
+            print(f"Error when reading from the database: {err}")
+    
+    
+    
         
     @classmethod
     def print_route_options(cls):
@@ -264,7 +337,8 @@ class Layout:
         list_route_options = [
             [1, "CREATE a new ROUTE"],
             [2, "Show all RIDES of a specific ROUTE"],
-            [3, "BACK to the main menu"]
+            [3, "EXPORT all routes"],
+            [4, "BACK to the main menu"]
             ]
             
         for option in list_route_options:
@@ -279,8 +353,6 @@ class Layout:
     
 
 if __name__ == '__main__':
-    Layout.splash_screen()
-    Layout.print_5_most_recent_rides()
-    Layout.print_title("choose an option")
-    Layout.print_main_options()
+    Layout.print_weather()
+    Layout.print_route_types()
     

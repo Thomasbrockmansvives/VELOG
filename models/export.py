@@ -51,6 +51,11 @@ class Export:
             
                 for route in list_routes:
                     writer.writerow(route)
+                    
+            print()
+            print("Export succesful. Please find the export of all routes in the Export folder.")
+            print()
+            
         except Exception as err:
             print(f"Error when exporting to csv: {err}")
                 
@@ -85,6 +90,11 @@ class Export:
             
                 for ride in list_rides:
                     writer.writerow(ride)
+                    
+            print()
+            print("Export succesful. Please find the export of all rides in the Export folder.")
+            print()
+            
         except Exception as err:
             print(f"Error when exporting to csv: {err}")
             
