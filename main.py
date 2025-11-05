@@ -17,7 +17,7 @@ from datetime import datetime
 
 user_state = "start"
 
-
+# method to call at startup
 def startup_application():
     Layout.splash_screen()
         
@@ -34,7 +34,8 @@ def startup_application():
     Layout.print_5_most_recent_rides()
     Layout.print_line()
     
-    
+
+# method to call a new ride logging    
 def log_a_new_ride():
     
     global user_state
@@ -46,14 +47,28 @@ def log_a_new_ride():
         while not validate_date(date_input):
             print("*** Invalid date format. Please use yyyy-mm-dd (e.g., 2025-11-05) ***")
             date_input = input("> Enter the date (format yyyy-mm-dd):   ")
-        start_input = input("> At what time did your ride start (format hh:mm):   ")
-        while not validate_time(start_input):
-            print("*** Invalid time format. Please use hh:mm (e.g., 14:30) ***")
+       
+        start_before_end = False
+        
+        while not start_before_end:
+            
             start_input = input("> At what time did your ride start (format hh:mm):   ")
-        end_input = input("> At what time did your ride end (format hh:mm):   ")
-        while not validate_time(end_input):
-            print("*** Invalid time format. Please use hh:mm (e.g., 16:45) ***")
+            while not validate_time(start_input):
+                print("*** Invalid time format. Please use hh:mm (e.g., 14:30) ***")
+                start_input = input("> At what time did your ride start (format hh:mm):   ")
             end_input = input("> At what time did your ride end (format hh:mm):   ")
+            
+            while not validate_time(end_input):
+                print("*** Invalid time format. Please use hh:mm (e.g., 16:45) ***")
+                end_input = input("> At what time did your ride end (format hh:mm):   ")
+                
+            start_before_end = validate_start_before_end(date_input,start_input, end_input)
+            
+            if not start_before_end:
+                print()
+                print("*** Your start time should always be before your end time.***")
+                print()
+            
         print()
         Layout.print_all_routes()
         print()
@@ -89,7 +104,8 @@ def log_a_new_ride():
     
     print()
     
-    
+
+# method to call ride update   
 def update_a_ride():
     
     global user_state
@@ -181,6 +197,7 @@ def update_a_ride():
     print()
 
 
+# method to call a ride delete
 def delete_a_ride():
     
     global user_state
@@ -198,7 +215,8 @@ def delete_a_ride():
     except ValueError:
         print("*** That is not an id. An id is in the form of a number. ***")
         
-          
+  
+# method to call a new route creation     
 def create_a_new_route():
     
     global user_state
@@ -238,6 +256,7 @@ def create_a_new_route():
     print()
 
 
+# method to call a list of all rides of a given route (by input)
 def show_rides_of_route():
     
     global user_state
@@ -255,6 +274,7 @@ def show_rides_of_route():
         print("*** That is not an id. An id is in the form of a number. ***")
     
 
+# method to call an export of all rides
 def export_rides():
     
     global user_state
@@ -268,6 +288,7 @@ def export_rides():
     user_state = "rides"
     
 
+# method to call an export of all routes
 def export_routes():
     
     global user_state
@@ -281,30 +302,34 @@ def export_routes():
     user_state = "routes"
     
 
-
+# method to call the closing of the application
 def close_app():
     print()
     Layout.print_title("Closing the application. Hope to see you soon !")
     sys.exit(0)
 
 
-
+# method to call the main options
 def main_options():
     Layout.print_line()
     Layout.print_main_options()
 
 
+# method to call the rides options
 def ride_options():
     Layout.print_line()
     Layout.print_all_rides()
     Layout.print_ride_options()
 
 
+# method to call the routes options
 def route_options():
     Layout.print_line()
     Layout.print_all_routes()
     Layout.print_route_options()
-    
+
+
+# method to call a validation of date input    
 def validate_date(date_string):
 
     try:
@@ -313,6 +338,8 @@ def validate_date(date_string):
     except ValueError:
         return False
 
+
+# method to call a validation of time input
 def validate_time(time_string):
 
     try:
@@ -321,11 +348,23 @@ def validate_time(time_string):
     except ValueError:
         return False
 
+
+# method to call a validation of start before end tim
+def validate_start_before_end(date_input,start_input, end_input):
+    
+    try:
+        start_datetime = datetime.strptime(f"{date_input} {start_input}", "%Y-%m-%d %H:%M")
+        end_datetime = datetime.strptime(f"{date_input} {end_input}", "%Y-%m-%d %H:%M")
+        
+        if start_datetime >= end_datetime:
+            return False
+        return True
+    except ValueError:
+        return False
+
     
 
-
-
-
+# method that triggers if this script is the main script called
 if __name__ == '__main__': 
     
     while not user_state == "end":

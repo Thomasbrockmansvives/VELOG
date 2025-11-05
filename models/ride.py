@@ -158,7 +158,7 @@ class Ride:
                 
             
         
-        except Exception as err:
+        except Exception:
             print("That ride does not exist. Please use an existing ride id.")
             
         
@@ -191,7 +191,7 @@ class Ride:
             
                 return ride_object
         
-        except Exception as err:
+        except Exception:
             print("That ride does not exist. Please use an existing ride id.")
         
         
@@ -304,7 +304,7 @@ class Ride:
                     
                 return list_rides
         
-        except Exception as err:
+        except Exception:
             print("That route doesn't exist. Please use an existing route id.")
         
     
@@ -327,7 +327,7 @@ class Ride:
 
 
 
-        
+# to test this class, run this script        
 if __name__ == '__main__':
     
 

@@ -106,7 +106,7 @@ class Route:
             
                 return route
         
-        except Exception as err:
+        except Exception:
             print("That route does not exist. Please use an existing route id.")
         
         
@@ -247,7 +247,7 @@ class Route:
 
 
 
-        
+# to test this class, run this script        
 if __name__ == '__main__':
     
     print("GET ALL ROUTES")

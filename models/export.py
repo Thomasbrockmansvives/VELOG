@@ -59,6 +59,7 @@ class Export:
         except Exception as err:
             print(f"Error when exporting to csv: {err}")
                 
+            
     # classmethod to export all rides to csv
     @classmethod
     def export_all_rides(cls):
@@ -97,7 +98,8 @@ class Export:
             
         except Exception as err:
             print(f"Error when exporting to csv: {err}")
-            
+   
+# to test this class, run this script            
 if __name__ == '__main__':
     Export.export_all_rides()
     Export.export_all_routes()

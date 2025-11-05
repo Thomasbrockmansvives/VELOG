@@ -19,6 +19,7 @@ class Layout:
     def __init__(self):
         pass
     
+    # classmethod to create the visual logo
     @classmethod
     def splash_screen(cls):
         
@@ -57,7 +58,7 @@ class Layout:
         for line in velog_logo:
             print(line)
             
-    
+    # method to present 5 most recent rides
     @classmethod 
     def print_5_most_recent_rides(cls):
         
@@ -85,7 +86,8 @@ class Layout:
             
         print("")
         
-            
+    
+    # method to print a title in the application style        
     @classmethod
     def print_title(cls, title):
 
@@ -101,14 +103,15 @@ class Layout:
         for line in title:
             print(line)
             
-            
+    
+    # method to print a text in the application style
     @classmethod
     def print_text(cls, text):
         text = "{:^83}".format(text.title())
         
         print(text)
         
-        
+    # method to print an empty line in the application style    
     @classmethod
     def print_line(cls):  
         print()
@@ -116,14 +119,15 @@ class Layout:
         print()
     
     
-        
+    # method to print a line in the application styl that asks to press a key to continue
     @classmethod
     def print_continue(cls):
         
         print()
-        input("{:^83}".format("enter any key to continue..."))
+        input("{:^83}".format("press any key to continue..."))
 
-            
+    
+    # method to print the main menu options in the application style        
     @classmethod
     def print_main_options(cls):
         
@@ -147,8 +151,9 @@ class Layout:
             
         print("_"*83)
         print("")
+   
         
-        
+    # method to print all rides in the application style            
     @classmethod 
     def print_all_rides(cls):
         
@@ -177,7 +182,8 @@ class Layout:
             
         print("")    
     
-        
+    
+    # method to print the rides menu options in the application style            
     @classmethod
     def print_ride_options(cls):
         
@@ -202,7 +208,8 @@ class Layout:
         print("_"*83)
         print(" ")
         
-        
+    
+    # method to print all routes in the application style            
     @classmethod 
     def print_all_routes(cls):
         
@@ -228,7 +235,7 @@ class Layout:
         print("") 
         
         
-    
+    # method to print all rides of a givn rout in the application style        
     @classmethod
     def print_all_rides_by_route(cls,route_id):
         print("{:^83}".format(f"<<< ALL RIDES OF ROUTE {route_id} >>>"))
@@ -255,8 +262,9 @@ class Layout:
            
             
         print("")   
+   
         
-        
+    # method to print all weather types in the application style            
     @classmethod    
     def print_weather(cls):
         
@@ -290,7 +298,8 @@ class Layout:
         except Exception as err:
             print(f"Error when reading from the database: {err}")
             
-            
+    
+    # method to print all route types in the application style                
     @classmethod    
     def print_route_types(cls):
         
@@ -325,8 +334,7 @@ class Layout:
             print(f"Error when reading from the database: {err}")
     
     
-    
-        
+    # method to print the routes menu options in the application style            
     @classmethod
     def print_route_options(cls):
         
@@ -351,7 +359,7 @@ class Layout:
         print(" ")
     
     
-
+# to test this class, run this script
 if __name__ == '__main__':
     Layout.print_weather()
     Layout.print_route_types()
