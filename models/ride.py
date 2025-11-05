@@ -126,8 +126,8 @@ class Ride:
             print()
             print("Ride has been updated.")
         
-        except Exception:
-            print("That ride does not exist. Please use an existing ride id.")
+        except Exception as err:
+            print(f"That ride does not exist. Please use an existing ride id: {err}")
     
     # class method to delete a ride
     @classmethod    
@@ -158,8 +158,8 @@ class Ride:
                 
             
         
-        except Exception:
-            print("That ride does not exist. Please use an existing ride id.")
+        except Exception as err:
+            print(f"That ride does not exist. Please use an existing ride id: {err}")
             
         
     # class method to get a ride by id   
@@ -191,8 +191,8 @@ class Ride:
             
                 return ride_object
         
-        except Exception:
-            print("That ride does not exist. Please use an existing ride id.")
+        except Exception as err:
+            print(f"That ride does not exist. Please use an existing ride id: {err}")
         
         
     
@@ -304,8 +304,8 @@ class Ride:
                     
                 return list_rides
         
-        except Exception:
-            print("That route doesn't exist. Please use an existing route id.")
+        except Exception as err:
+            print(f"That route doesn't exist. Please use an existing route id: {err}")
         
     
     # classmethod to calculate the duration in minutes

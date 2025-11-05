@@ -74,21 +74,27 @@ def log_a_new_ride():
         print()
         try:
             route_input = int(input("> Enter the id of the route you followed (number):   "))
-        except ValueError:
-            print("*** That is not an id. An id is in the form of a number. ***")
+        except ValueError as err:
+            print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+        except Exception as err:
+            print(f"Unknown error: {err}")
             
         print()
         Layout.print_weather()
         print()
         try:
             weather_input = int(input("> Enter the id of the weather type (number):   "))
-        except ValueError:
-            print("*** That is not an id. An id is in the form of a number. ***")
+        except ValueError as err:
+            print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+        except Exception as err:
+            print(f"Unknown error: {err}")
         print()
         try:
             score_input = int(input("> Enter a score between 0 and 10 (number):   "))
-        except ValueError:
-            print("*** That is not a number. ***")
+        except ValueError as err:
+            print(f"*** That is not a number. *** {err}")
+        except Exception as err:
+            print(f"Unknown error: {err}")
         
         ride = Ride(route_input, date_input, start_input, end_input, score_input, weather_input)
         
@@ -115,8 +121,10 @@ def update_a_ride():
     try:
         try:
             id_input = int(input("> Which ride id would you like to update (number):   "))
-        except ValueError:
-            print("*** That is not an id. An id is in the form of a number. ***")
+        except ValueError as err:
+            print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+        except Exception as err:
+            print(f"Unknown error: {err}")
         
         ride = Ride.get_by_id(id_input)
         print(f"Choosen ride: {ride}")
@@ -155,8 +163,10 @@ def update_a_ride():
             print()
             try:
                 route_input = int(input("> Enter the id of the route you followed (number):   "))
-            except ValueError:
-                print("*** That is not an id. An id is in the form of a number. ***")
+            except ValueError as err:
+                print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+            except Exception as err:
+                print(f"Unknown error: {err}")
         else:
             route_input = ride.route_id
             
@@ -167,8 +177,11 @@ def update_a_ride():
             print()
             try:
                 weather_input = int(input("> Enter the id of the weather type (number):   "))
-            except ValueError:
-                print("*** That is not an id. An id is in the form of a number. ***")
+            except ValueError as err:
+                print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+                print()
+            except Exception as err:
+                print(f"Unknown error: {err}")
                 print()
         else:
             weather_input = ride.weather_id
@@ -177,8 +190,10 @@ def update_a_ride():
         if change_score == "y":
             try:
                 score_input = int(input("> Enter a score between 0 and 10 (number):   "))
-            except ValueError:
-                print("*** That is not a number. ***")
+            except ValueError as err:
+                print(f"*** That is not a number. *** {err}")
+            except Exception as err:
+                print(f"Unknown error: {err}")
         else:
             score_input = ride.score
         
@@ -212,8 +227,10 @@ def delete_a_ride():
         
         user_state = "rides"
         
-    except ValueError:
-        print("*** That is not an id. An id is in the form of a number. ***")
+    except ValueError as err:
+        print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+    except Exception as err:
+        print(f"Unknown error: {err}")
         
   
 # method to call a new route creation     
@@ -232,14 +249,18 @@ def create_a_new_route():
         print()
         try:
             type_input = int(input("> Enter the id of the route type (number):   "))
-        except ValueError:
-            print("*** That is not an id. An id is in the form of a number. ***")
+        except ValueError as err:
+            print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+        except Exception as err:
+            print(f"Unknown error: {err}")
         print()
         
         try:
             length_input = int(input("> Enter a length in km (number):   "))
-        except ValueError:
-            print("*** That is not a valid length. ***")
+        except ValueError as err:
+            print(f"*** That is not a valid length. *** {err}")
+        except Exception as err:
+            print(f"Unknown error: {err}")
         
         route = Route(start_input, destination_input, type_input, length_input)
         
@@ -270,8 +291,10 @@ def show_rides_of_route():
         Layout.print_all_rides_by_route(route_input)
         Layout.print_continue()
         user_state = "rides"
-    except ValueError:
-        print("*** That is not an id. An id is in the form of a number. ***")
+    except ValueError as err:
+        print(f"*** That is not an id. An id is in the form of a number. *** {err}")
+    except Exception as err:
+        print(f"Unknown error: {err}")
     
 
 # method to call an export of all rides
@@ -337,6 +360,8 @@ def validate_date(date_string):
         return True
     except ValueError:
         return False
+    except Exception as err:
+        print(f"Unknown error: {err}")
 
 
 # method to call a validation of time input
@@ -347,6 +372,8 @@ def validate_time(time_string):
         return True
     except ValueError:
         return False
+    except Exception as err:
+        print(f"Unknown error: {err}")
 
 
 # method to call a validation of start before end tim
@@ -361,6 +388,8 @@ def validate_start_before_end(date_input,start_input, end_input):
         return True
     except ValueError:
         return False
+    except Exception as err:
+        print(f"Unknown error: {err}")
 
     
 
@@ -396,9 +425,13 @@ if __name__ == '__main__':
                     user_state = "main"
                     
                     
-            except ValueError:
+            except ValueError as err:
                 print()
-                print("*** That is not a valid option. Please give the number of your option. ***")
+                print(f"*** That is not a valid option. Please give the number of your option. *** {err}")
+                print()
+            except Exception as err:
+                print()
+                print(f"Unknown error: {err}")
                 print()
             
         elif user_state == "rides":
@@ -420,13 +453,17 @@ if __name__ == '__main__':
                     user_state = "main"
                 else:
                     print()
-                    print("*** That is not an existing option. Please choose a number between 1 and 4. ***")
+                    print(f"*** That is not an existing option. Please choose a number between 1 and 5. *** {err}")
                     user_state = "main"
                     
                     
-            except ValueError:
+            except ValueError as err:
                 print()
-                print("*** That is not a valid option. Please give the number of your option. ***")
+                print(f"*** That is not a valid option. Please give the number of your option. *** {err}")
+                print()
+            except Exception as err:
+                print()
+                print(f"Unknown error: {err}")
                 print()
             
         elif user_state == "routes":
@@ -447,13 +484,17 @@ if __name__ == '__main__':
                 
                 else:
                     print()
-                    print("*** That is not an existing option. Please choose a number between 1 and 5. ***")
+                    print("*** That is not an existing option. Please choose a number between 1 and 4. ***")
                     user_state = "routes"
                     
                     
-            except ValueError:
+            except ValueError as err:
                 print()
-                print("*** That is not a valid option. Please give the number of your option. ***")
+                print(f"*** That is not a valid option. Please give the number of your option. *** {err}")
+                print()
+            except Exception as err:
+                print()
+                print(f"Unknown error: {err}")
                 print()
             
         elif user_state == "new_ride":

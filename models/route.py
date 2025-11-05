@@ -106,8 +106,8 @@ class Route:
             
                 return route
         
-        except Exception:
-            print("That route does not exist. Please use an existing route id.")
+        except Exception as err:
+            print(f"That route does not exist. Please use an existing route id: {err}")
         
         
     
