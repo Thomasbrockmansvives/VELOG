@@ -2,23 +2,29 @@
 a command line bike ride logging application in python
 
 ## 📃 FEATURES
-- the user can log rides (with a score, weather type, time and which route he took)
-- the user can also create new or modify existing routes (templates for rides)
-- the user can ask for an export in csv of the ride loggings and the routes availables
+- the user can log rides (with a score, weather type, time and which route they took)
+- the user can update or delete existing rides
+- the user can create new routes (templates for rides)
+- the user can view the 5 most recent rides on startup
+- the user can view all rides or all rides for a specific route
+- the user can ask for an export in csv of the ride loggings and the routes available
 
 ## 🔧 INSTALLATION INSTRUCTIONS
 **after cloning from the remote repository:**
 - create a .venv (python -m venv .venv)
 - activate the virtual environment
 - install the requirements.txt (pip install -r requirements.txt)
-- create a .env file (look at example_env) with the correct path to the database
+- create a .env file in the root directory with the correct path to the database
+  - add: DATABASE_PATH=velog.db (or your custom path)
+- ensure your SQLite database (velog.db) is in the project root directory
+
 ## ✏️ APPLICATION DESIGN
 
-We are using some classes with each their own encapsulated logic. Each class handles its own database operations, so their is no separate database class for this:
-- UI Class: a class for user interactions: options menu, welcome message, handling user inputs and calling the separate class methods.
-- Ride Class: representing a single bike ride with the same attributes as in database and methods like save, read, update, delete
-- Route Class: representing a bike route with the same attributes as in database and methods like save, read
-- Report Class: generating CSV reports, with methods like export_all_rides and export_all_routes
+We are using some classes with each their own encapsulated logic. Each class handles its own database operations, so there is no separate database class for this:
+- **Layout Class**: a class for user interactions: options menu, welcome message, splash screen, handling user inputs and calling the separate class methods
+- **Ride Class**: representing a single bike ride with the same attributes as in database and methods like create, read, update, delete
+- **Route Class**: representing a bike route with the same attributes as in database and methods like create, read, calculate_averages
+- **Export Class**: generating CSV reports, with methods like export_all_rides and export_all_routes
 
 ### CLASS STRUCTURE
 
@@ -31,48 +37,58 @@ We are using some classes with each their own encapsulated logic. Each class han
 - calculate_averages()
 - get_all()
 - get_by_id()
+- route_exists()
 
 ##### Operations:
-- **Create new route:**   main.create_route() > new_route() > new_route.save() > database operation > print success message <br>
-- **Show all routes:**   main.show_routes() > routes[] = Route.get_all() > database operation > print routes[] <br>
+- **Create new route:**   main.create_a_new_route() > new_route() > new_route.create() > database operation > print success message <br>
+- **Show all routes:**   main.route_options() > Layout.print_all_routes() > Route.get_all() > database operation > display routes <br>
 
 
 #### RIDE CLASS
 ##### Attributes: 
-&nbsp;&nbsp;&nbsp; ride_id, route_id,date, start_time, end_time, score, weather_id
+&nbsp;&nbsp;&nbsp; ride_id, route_id, date, start_time, end_time, score, weather_id
 ##### Methods:
-- save()
+- create()
 - update()
-- delete()
+- delete_by_id()
 - get_all()
 - get_last_n()
 - get_by_id()
-- get_by_route()
+- get_rides_by_route_id()
 - calculate_duration()
 
 ##### Operations:
-- **Log a ride:** main.create_ride() > new_ride() > new.ride_save() > database operation > new_ride.update_route_averages() > database operation > print success message
-- **Show last 10 rides:** main.show_last_rides() > rides[] = Ride.get_last_n(10) > database operation > print rides[]
-- **Modify a ride:** main.update_ride() > ride = Ride.get_ride_by_id() > database operation > collect new values by input > ride.update() > database operation > ride.update_route_averages() > print success message
-- **Delete a ride:** main.delete_ride() > ride = Ride.get_ride_by_id() > database operation > confirm deletion by input > route_id = ride.route_id > ride.delete() > database operation > route = Route.get_by_id(route_id) > database operation > route.calculate_averages() > database operation > print success message
+- **Log a ride:** main.log_a_new_ride() > new_ride() > new_ride.create() > database operation > print success message
+- **Show last 5 rides:** main.startup_application() > Layout.print_5_most_recent_rides() > Ride.get_last_n(5) > database operation > display rides
+- **Modify a ride:** main.update_a_ride() > Ride.get_by_id() > database operation > collect new values by input > ride.update() > database operation > Route.calculate_averages() > print success message
+- **Delete a ride:** main.delete_a_ride() > Ride.delete_by_id() > database operation > print success message
 
-#### REPORT CLASS
+#### EXPORT CLASS
 ##### Methods:
 - export_all_rides()
 - export_all_routes()
 
 ##### Operations:
-- **Export routes:** main.export_routes() > routes[] = Route.get_all() > database operation > Report.export_all_routes(routes) > csv file operation > print success message
-- **Export rides:** main.export_rides() > rides[] = Ride.get_all() > database operation > Report.export_all_rides(rides) > csv file operation > print success message
+- **Export routes:** main.export_routes() > Export.export_all_routes() > Route.get_all() > database operation > csv file operation > print success message
+- **Export rides:** main.export_rides() > Export.export_all_rides() > Ride.get_all() > database operation > csv file operation > print success message
 
 
-#### UI CLASS
+#### LAYOUT CLASS
 ##### Methods:
-- print_menu()
-- print_routes()
-- print_welcome()
-- print_weather_types()
+- splash_screen()
+- print_5_most_recent_rides()
+- print_title()
+- print_text()
+- print_line()
+- print_continue()
+- print_main_options()
+- print_all_rides()
+- print_ride_options()
+- print_all_routes()
+- print_all_rides_by_route()
+- print_weather()
 - print_route_types()
+- print_route_options()
 
 
 ## 🗄️ DATABASE
@@ -80,10 +96,7 @@ We are using some classes with each their own encapsulated logic. Each class han
 &nbsp;&nbsp;&nbsp;the application uses a '.env' file to store configuration settings.
 
    1. Create a .env file in the root directory of the project
-   2. Add the configuration as shown in example_env (modify if you placed the database elsewhere)
-
-&nbsp;&nbsp;&nbsp;The database can be tested with the db_testing.py script. <br>
-&nbsp;&nbsp;&nbsp;This script tests the connections, checks the existence of the required tables and counts the records in the database. <br>
+   2. Add the configuration: DATABASE_PATH=velog.db (modify if you placed the database elsewhere)
 
 ### DB STRUCTURE
 
@@ -120,12 +133,56 @@ We are using some classes with each their own encapsulated logic. Each class han
 - end_time: text
 - score: integer
 - weather_id **(FK)**
-- <br>
 
 &nbsp;&nbsp;&nbsp;**routes (1) ------------- (many) rides** <br>
 &nbsp;&nbsp;&nbsp;**weather_types (1) -------------- (many) rides**
 <br>
 
 ### DATA FLOW
-&nbsp;&nbsp;&nbsp;when a ride is logged, the application also recalculates and updates the average_score and average_time_minutes in routes
+&nbsp;&nbsp;&nbsp;when a ride is logged, the application stores it in the database. When a ride is updated or deleted, the application recalculates and updates the average_score and average_time_minutes in the routes table using Route.calculate_averages()
 
+## 🚀 USAGE
+Run the application from the project root directory:
+```bash
+python main.py
+```
+
+The application will:
+1. Display a splash screen with the VELOG logo
+2. Show the 5 most recent rides
+3. Present a main menu with options to:
+   - Log a new ride
+   - Show all rides (with options to update, delete, or export)
+   - Show all routes (with options to create, view rides by route, or export)
+   - Create a new route
+   - Close the application
+
+## 📁 PROJECT STRUCTURE
+```
+velog/
+├── main.py              # Main application script with user interface logic
+├── models/
+│   ├── ride.py          # Ride class definition and methods
+│   ├── route.py         # Route class definition and methods
+│   ├── layout.py        # Layout class for UI formatting
+│   └── export.py        # Export class for CSV generation
+├── Export/              # Directory for CSV exports (created automatically)
+├── velog.db             # SQLite database
+├── .env                 # Environment configuration (DATABASE_PATH)
+├── .venv/               # Virtual environment
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
+```
+
+## 📋 REQUIREMENTS
+This application meets the following project requirements:
+- ✅ Git version control with remote repository on GitHub
+- ✅ Sensitive data stored in .env file
+- ✅ SQLite database with 4 tables (weather_types, types, routes, rides)
+- ✅ Application modifies and adds rows to the database
+- ✅ CSV export functionality for rides and routes
+- ✅ Object-oriented design with classes (Route, Ride, Export, Layout)
+- ✅ Terminal-based user interaction
+- ✅ Modular structure with separate model files
+- ✅ Virtual environment setup
+- ✅ Requirements.txt with all dependencies
