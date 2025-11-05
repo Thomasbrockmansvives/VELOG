@@ -17,8 +17,8 @@ class Route:
 
     def __init__(self, start, destination, type_id, length_km):
         try:
-            # type_id can only between 5 and 8
-            if type_id < 5 or type_id > 8:
+            # type_id can only between 1 and 4
+            if type_id < 1 or type_id > 4:
                 print("That type of route is not supported.")
 
             else:

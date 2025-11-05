@@ -17,8 +17,8 @@ class Ride:
 
     def __init__(self, route_id, date, start_time, end_time, score, weather_id):
         try:
-            # weather_id can only between 6 and 13
-            if weather_id < 6 or weather_id > 13:
+            # weather_id can only between 1 and 8
+            if weather_id < 1 or weather_id > 8:
                 print("That type of weather is not supported.")
 
             elif score < 0 or score > 10:
