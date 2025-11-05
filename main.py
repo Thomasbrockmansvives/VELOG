@@ -108,6 +108,8 @@ def log_a_new_ride():
         print()
         print(f"Error when logging a new ride: {err}")
     
+    
+    Route.calculate_averages(route_input)
     print()
     
 
@@ -209,6 +211,7 @@ def update_a_ride():
         print()
         print(f"Error when updating a ride: {err}")
     
+    Route.calculate_averages(route_input)
     print()
 
 
