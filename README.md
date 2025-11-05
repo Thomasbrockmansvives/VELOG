@@ -173,16 +173,3 @@ velog/
 ├── requirements.txt     # Python dependencies
 └── README.md            # This file
 ```
-
-## 📋 REQUIREMENTS
-This application meets the following project requirements:
-- ✅ Git version control with remote repository on GitHub
-- ✅ Sensitive data stored in .env file
-- ✅ SQLite database with 4 tables (weather_types, types, routes, rides)
-- ✅ Application modifies and adds rows to the database
-- ✅ CSV export functionality for rides and routes
-- ✅ Object-oriented design with classes (Route, Ride, Export, Layout)
-- ✅ Terminal-based user interaction
-- ✅ Modular structure with separate model files
-- ✅ Virtual environment setup
-- ✅ Requirements.txt with all dependencies
