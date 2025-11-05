@@ -12,6 +12,7 @@ from models.ride import Ride
 from models.layout import Layout
 from models.export import Export
 import sys
+from datetime import datetime
 
 
 user_state = "start"
@@ -42,8 +43,17 @@ def log_a_new_ride():
     
     try:
         date_input = input("> Enter the date (format yyyy-mm-dd):   ")
+        while not validate_date(date_input):
+            print("*** Invalid date format. Please use yyyy-mm-dd (e.g., 2025-11-05) ***")
+            date_input = input("> Enter the date (format yyyy-mm-dd):   ")
         start_input = input("> At what time did your ride start (format hh:mm):   ")
+        while not validate_time(start_input):
+            print("*** Invalid time format. Please use hh:mm (e.g., 14:30) ***")
+            start_input = input("> At what time did your ride start (format hh:mm):   ")
         end_input = input("> At what time did your ride end (format hh:mm):   ")
+        while not validate_time(end_input):
+            print("*** Invalid time format. Please use hh:mm (e.g., 16:45) ***")
+            end_input = input("> At what time did your ride end (format hh:mm):   ")
         print()
         Layout.print_all_routes()
         print()
@@ -98,18 +108,27 @@ def update_a_ride():
         change_date = input("Would you like to change the date? (y/n)   ")
         if change_date == "y":    
             date_input = input("> Enter the date (format yyyy-mm-dd):   ")
+            while not validate_date(date_input):
+                print("*** Invalid date format. Please use yyyy-mm-dd (e.g., 2025-11-05) ***")
+                date_input = input("> Enter the date (format yyyy-mm-dd):   ")
         else:
             date_input = ride.date
         
         change_start = input("Would you like to change the start time? (y/n)   ")
         if change_start == "y":    
             start_input = input("> At what time did your ride start (format hh:mm):   ")
+            while not validate_time(start_input):
+                print("*** Invalid time format. Please use hh:mm (e.g., 14:30) ***")
+                start_input = input("> At what time did your ride start (format hh:mm):   ")
         else:
             start_input = ride.start_time
             
         change_end = input("Would you like to change the end time? (y/n)   ")
         if change_end == "y":    
             end_input = input("> At what time did your ride end (format hh:mm):   ")
+            while not validate_time(end_input):
+                print("*** Invalid time format. Please use hh:mm (e.g., 16:45) ***")
+                end_input = input("> At what time did your ride end (format hh:mm):   ")
         else:
             end_input = ride.end_time
             
@@ -285,6 +304,22 @@ def route_options():
     Layout.print_line()
     Layout.print_all_routes()
     Layout.print_route_options()
+    
+def validate_date(date_string):
+
+    try:
+        datetime.strptime(date_string, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
+def validate_time(time_string):
+
+    try:
+        datetime.strptime(time_string, "%H:%M")
+        return True
+    except ValueError:
+        return False
 
     
 
